@@ -4,11 +4,18 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
 	public float speed;
+	public GUIText countText;
+	public GUIText winText;
+	private int count;
 	
 	private Rigidbody rb;
 		
 	void Start ()
 	{
+		count = 0;
+		SetCountText ();
+		winText.text = "";
+
 		rb = GetComponent<Rigidbody>();
 	}
     void FixedUpdate ()
@@ -24,10 +31,21 @@ public class PlayerController : MonoBehaviour {
 	}
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.CompareTag ("Pick Up")) 
+		if (other.gameObject.tag == "Pick Up") 
 		{
 			other.gameObject.SetActive (false);
+			count = count + 1;
+			SetCountText ();
 		}
 	}
+	void SetCountText()
+		{
+			countText.text= "Count: " + count.ToString();
+		if (count >= 5)
+		{
+			winText.text = "You Win!";
+		}
+
+}
 }
 
